@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDTIyDNNZE9wtSv0Ss9pqsGTIYtt12sDgc&sensor=false">
+    </script>
+    <script type="text/javascript">
+
+	
+	var myCenter = new google.maps.LatLng(26.311047, 50.1468042);
+	var marker;
+	var marker1;
+function initialize() {
+        var mapOptions = {
+          center: myCenter,
+          zoom: 18,
+          mapTypeId: google.maps.MapTypeId.ROADMAP};
+		  
+         map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+			
+			 marker=new google.maps.Marker({
+  position:myCenter,
+  animation:google.maps.Animation.BOUNCE
+  });
+  marker.setMap(map);
+
+  var infowindow1 = new google.maps.InfoWindow({
+  content:"Mohammed!"
+  });
+infowindow1.open(map,marker);
+
+// display on click marker
+var infowindow3 = new google.maps.InfoWindow({
+  content:"How are you Farouq?"
+  });
+
+google.maps.event.addListener(marker, 'click', function() {
+  infowindow3.open(map,marker);
+  });
+
+
+  
+  marker1=new google.maps.Marker({
+  position:new google.maps.LatLng(26.312047, 50.1440042),
+  animation:google.maps.Animation.BOUNCE
+  });
+  marker1.setMap(map);
+  
+  var infowindow2 = new google.maps.InfoWindow({
+  content:"Farouq!"
+  });
+infowindow2.open(map,marker1);
+  
+      }
+
+	 
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+	var myVar=setInterval(function(){getVars()},5000);
+	function getVars(){
+	if (location.search != "")
+	{
+	var x = location.search.substr(1).split("&")
+	
+		var longitude = x[0].split("=");			
+		var latitude = x[1].split("=");			
+		var id = x[2].split("=");			
+		var gas = x[3].split("=");			
+		var disp;
+		if(gas[1] == -1)
+			{
+		   disp="ID: "+id[1];
+		   }
+		else
+			{		
+			disp ="ID: " +id[1] + "<br /> GAS: " + gas[1];
+			}
+		
+
+var marker_=new google.maps.Marker({ position:new google.maps.LatLng(longitude[1],latitude[1]), animation:google.maps.Animation.BOUNCE});
+ marker_.setMap(map);
+  
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+ 	// display on click marker_
+var infowindowMarker = new google.maps.InfoWindow({
+  content:disp
+  });
+
+google.maps.event.addListener(marker_, 'click', function() {
+  infowindowMarker.open(map,marker_);
+  });
+		
+	
+}	
+}
+
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"/>
+  </body>
+</html>

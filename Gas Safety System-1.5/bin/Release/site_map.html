@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDTIyDNNZE9wtSv0Ss9pqsGTIYtt12sDgc&sensor=false">
+    </script>
+    <script type="text/javascript">
+
+	
+	var myCenter = new google.maps.LatLng(26.311047, 50.1468042);	
+	
+function initialize() {
+        var mapOptions = {
+          center: myCenter,
+          zoom: 18,
+          mapTypeId: google.maps.MapTypeId.ROADMAP};
+		  
+         map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+
+  
+      }
+
+	 
+ 
+	var latArr = new Array();
+	var longArr = new Array();
+	var idArr = new Array();
+	var gasArr = new Array();
+	
+	var markersArr = new Array();
+	var infMarkerArr = new Array();
+	
+
+
+	function getVars( longitude,latitude, id,gas)
+	{
+	
+		{
+			
+		var disp;
+		if(gas == -1)
+			{
+		   disp="ID: "+id;
+		   }
+		else
+			{		
+			disp ="ID: " +id + "<br /> GAS: " + gas;
+			}
+		
+		if(idArr[id]!=id)
+		{
+		    idArr[id]=id;
+		    
+			longArr[id]=longitude;
+		    latArr[id]=latitude;		  
+		    gasArr[id]=gas;
+		   
+		    markersArr[id] = new google.maps.Marker({ 
+					position:new google.maps.LatLng(latArr[id],longArr[id]), 
+					animation:google.maps.Animation.BOUNCE});
+			markersArr[id].setMap(map);
+			
+			infMarkerArr[id] = new google.maps.InfoWindow({content:disp});
+			google.maps.event.addListener(markersArr[id], 'click', function() {
+			infMarkerArr[id].open(map,markersArr[id]);
+			});
+			
+		}   // it already exists
+		else {
+		
+	        markersArr[id].setPosition( new google.maps.LatLng( latitude, longitude ) );
+
+			//markersArr[id].setPosition(new google.maps.LatLng(latArr[id],longArr[id]));
+			//map.panTo(new google.maps.LatLng(latArr[id],longArr[id]));			
+			//markersArr[id].setMap(map);
+				
+			}
+		
+
+		
+	
+		}// end if	
+	}// end function
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"/>
+  </body>
+</html>
